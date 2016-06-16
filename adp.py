@@ -2,6 +2,7 @@ import json, time, requests, getpass, BeautifulSoup
 session=requests.session()
 username=str(raw_input('Username: '))
 passwd=getpass.getpass()
+print
 headers={
 	'host':                'mobile2.adp.com',
 	'Content-Type':        'application/json',
@@ -69,5 +70,5 @@ sRes=session.get('https://mobile2.adp.com/springboard/s',headers=headers)
 headers['Referer']=sRes.url
 payLog=session.get('https://mobile2.adp.com/payroll/',headers=headers)
 soup=BeautifulSoup.BeautifulSoup(payLog.content)
-payChecks=soup.findAll("ul",{"class":"tableview amts m-top"})[0]
+payChecks=soup.findAll("ul",{"class":"tableview amts m-top"})[0].text.replace('Net',' Net').replace('on','\non').replace('/16','/16\n')
 print payChecks
